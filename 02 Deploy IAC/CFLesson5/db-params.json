@@ -1,0 +1,14 @@
+[
+	{
+		"ParameterKey": "EnvironmentName",
+		"ParameterValue": "UdacityProjectDBInstance"
+	},
+    {
+		"ParameterKey": "DBUserName",
+		"ParameterValue": "isa56k-dba"
+	},
+	{
+		"ParameterKey": "DBPass",
+		"ParameterValue": "GreatPasswords"
+	}
+]

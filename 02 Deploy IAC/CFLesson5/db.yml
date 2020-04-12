@@ -1,0 +1,27 @@
+Description: >
+    isa56k Udacity DB CF Setup Lesson 5
+
+Parameters:
+    EnvironmentName:
+        Description: An environment name that will be prefixed to resource names
+        Type: String
+    DBUserName:
+        Description: The database user name on first config
+        Type: String
+    DBPass:
+        Description: The database master password
+        Type: String
+
+
+Resources:
+    DB:
+      Type: AWS::RDS::DBInstance
+      Properties:
+        DBInstanceClass: db.t2.micro
+        MasterUsername: !Ref DBUserName
+        MasterUserPassword: !Ref DBPass
+        VPCSecurityGroups:
+          - sg-0e2c248dfd033118c
+        Tags:
+          - Key: Name
+            Value: !Ref EnvironmentName

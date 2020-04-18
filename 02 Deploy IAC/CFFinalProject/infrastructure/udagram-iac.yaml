@@ -303,7 +303,6 @@ Resources:
     Properties:
       ImageId: ami-0d1cd67c26f5fca19
       InstanceType: t3.medium
-      KeyName: !Ref ec2Key
       SecurityGroups:
         - Ref: WebServerSG
       BlockDeviceMappings:

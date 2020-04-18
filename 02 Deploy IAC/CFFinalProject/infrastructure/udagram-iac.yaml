@@ -127,7 +127,7 @@ Resources:
       Type: AWS::EC2::NatGateway
       Properties: 
           AllocationId: !GetAtt NatGateway1EIP.AllocationId
-          SubnetId: !Ref PrivateSubnet1
+          SubnetId: !Ref PublicSubnet1
 
   NatGateway2EIP:
     Type: AWS::EC2::EIP
@@ -139,7 +139,7 @@ Resources:
       Type: AWS::EC2::NatGateway
       Properties: 
           AllocationId: !GetAtt NatGateway2EIP.AllocationId
-          SubnetId: !Ref PrivateSubnet1
+          SubnetId: !Ref PublicSubnet2
 
   PublicRouteTable:
       Type: AWS::EC2::RouteTable
@@ -275,7 +275,7 @@ Resources:
           Value: !Sub ${EnvironmentName} BastionSG
 
 # Bastion Configuration  
-  BsstionServer:
+  BasstionServer:
     Type: AWS::EC2::Instance
     Properties:
       KeyName: !Ref ec2Key
@@ -295,6 +295,7 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${EnvironmentName} Bastion
+
 
 # Server Configuration
   WebAppLaunchConfig:
@@ -347,8 +348,8 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
       Subnets: 
-        - !Ref PrivateSubnet1
-        - !Ref PrivateSubnet2
+        - !Ref PublicSubnet1
+        - !Ref PublicSubnet2
       SecurityGroups:
       - Ref: LoadBalancerSG
   Listener:
@@ -385,3 +386,11 @@ Resources:
       Protocol: HTTP
       UnhealthyThresholdCount: 5
       VpcId: !Ref VPC
+
+Outputs: 
+    # URL of the Udagram App 
+    URL: 
+        Description: A reference to the load balancer DNS
+        Value: !Sub http://${WebAppLB.DNSName}
+        Export:
+          Name: URL
